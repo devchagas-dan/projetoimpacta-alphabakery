@@ -1,0 +1,26 @@
+version: '4.63.0'
+
+services:
+  alpha-bakery-mysql:
+    image: mysql
+    restart: always
+    container_name: "alpha-bakery-mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data.sql:/docker-entrypoint-initdb.d/data.sql
+      - sports-center-mysql-data:/var/lib/mysql
+
+  alphabakery-redis:
+    image: "redis:latest"
+    container_name: "alpha-bakery-redis-container"
+    ports:
+      - "6379:6379"
+    volumes:
+      - alpha-bakery-redis-data:/data
+
+volumes:
+  alpha-bakery-redis-data:
+  alpha-bakery-mysql-data:
