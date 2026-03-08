@@ -1,6 +1,5 @@
 package com.projeto.alphabakery.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -32,6 +31,5 @@ public class ProductType {
     private String name;
 
     @OneToMany(mappedBy = "productType", fetch = FetchType.LAZY)
-    @JsonManagedReference
     private List<Product> products;
 }
