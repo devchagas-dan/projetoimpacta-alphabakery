@@ -5,7 +5,7 @@ spring:
   application:
     name: AlphaBakery
   datasource:
-    url: jdbc:mysql://localhost:3306/alphabakery
+    url: jdbc:mysql://localhost:3307/alphabakery
     username: root
     password: root
   jpa:
