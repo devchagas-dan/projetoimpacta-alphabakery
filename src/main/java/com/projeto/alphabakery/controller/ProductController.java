@@ -68,7 +68,7 @@ public class ProductController {
     public void deleteProduct(@PathVariable Integer id) {
         productService.deleteProduct(id);
     }
-
+ // Endpoints for brand
     @GetMapping("/brands")
     public ResponseEntity<List<BrandResponse>> getBrands() {
         List<BrandResponse> brandResponses = brandService.getAllBrands();
