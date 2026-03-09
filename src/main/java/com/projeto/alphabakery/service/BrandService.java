@@ -11,10 +11,10 @@ public interface BrandService {
 
     List<BrandResponse> getAllBrands();
 
-    Brand createBrand(Brand brand);
+    BrandResponse createBrand(Brand brand);
 
-    Brand getBrandById(Integer id);
-    Brand updateBrand(Integer brandId, Brand brand);
+    BrandResponse getBrandById(Integer id);
+    BrandResponse updateBrand(Integer brandId, Brand brand);
 
     void deleteBrand(Integer id);
 

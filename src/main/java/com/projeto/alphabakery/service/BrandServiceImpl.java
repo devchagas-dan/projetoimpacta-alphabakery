@@ -4,7 +4,6 @@ import com.projeto.alphabakery.dto.BrandResponse;
 import com.projeto.alphabakery.entity.Brand;
 import com.projeto.alphabakery.repository.BrandRepository;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,24 +31,40 @@ public class BrandServiceImpl implements BrandService{
     }
 
     @Override
-    public Brand createBrand(Brand brand) {
-        return brandRepository.save(brand);
+    public BrandResponse createBrand(Brand brand) {
+
+        Brand savedBrand = brandRepository.save(brand);
+
+        return mapToResponse(savedBrand);
     }
 
     @Override
-    public Brand getBrandById(Integer brandId) {
-        return brandRepository.findById(brandId)
+    public BrandResponse getBrandById(Integer brandId) {
+
+        Brand brand = brandRepository.findById(brandId)
                 .orElseThrow(() -> new RuntimeException("Brand not found"));
+
+        return mapToResponse(brand);
     }
 
     @Override
-    public Brand updateBrand(Integer brandId, Brand brand) {
+    public BrandResponse updateBrand(Integer brandId, Brand brand) {
 
         Brand existingBrand = brandRepository.findById(brandId)
                 .orElseThrow(() -> new RuntimeException("Brand not found"));
 
         existingBrand.setName(brand.getName());
-        return brandRepository.save(existingBrand);
+
+        Brand updatedBrand = brandRepository.save(existingBrand);
+
+        return mapToResponse(updatedBrand);
+    }
+
+    private BrandResponse mapToResponse(Brand brand) {
+        return BrandResponse.builder()
+                .id(brand.getId())
+                .name(brand.getName())
+                .build();
     }
 
     @Override
