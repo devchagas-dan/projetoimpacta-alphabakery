@@ -30,24 +30,42 @@ public class ProductTypeServiceImpl implements ProductTypeService{
     }
 
     @Override
-    public ProductType createProductType(ProductType productType) {
-        return productTypeRepository.save(productType);
+    public ProductTypeResponse createProductType(ProductType productType) {
+
+        ProductType savedProductType = productTypeRepository.save(productType);
+
+        return new ProductTypeResponse(
+                savedProductType.getId(),
+                savedProductType.getName()
+        );
     }
 
     @Override
-    public ProductType getProductTypeById(Integer productTypeId) {
-        return productTypeRepository.findById(productTypeId)
+    public ProductTypeResponse getProductTypeById(Integer productTypeId) {
+
+        ProductType productType = productTypeRepository.findById(productTypeId)
                 .orElseThrow(() -> new RuntimeException("ProductType not found"));
+
+        return new ProductTypeResponse(
+                productType.getId(),
+                productType.getName()
+        );
     }
 
     @Override
-    public ProductType updateProductType(Integer productTypeId, ProductType productType) {
+    public ProductTypeResponse updateProductType(Integer productTypeId, ProductType productType) {
 
         ProductType existingProductType = productTypeRepository.findById(productTypeId)
                 .orElseThrow(() -> new RuntimeException("Product type not found"));
 
         existingProductType.setName(productType.getName());
-        return productTypeRepository.save(existingProductType);
+
+        ProductType updatedProductType = productTypeRepository.save(existingProductType);
+
+        return new ProductTypeResponse(
+                updatedProductType.getId(),
+                updatedProductType.getName()
+        );
     }
 
     @Override

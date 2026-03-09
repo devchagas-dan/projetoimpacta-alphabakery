@@ -4,15 +4,13 @@ import com.projeto.alphabakery.dto.BrandResponse;
 import com.projeto.alphabakery.entity.Brand;
 import com.projeto.alphabakery.repository.BrandRepository;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Log4j2
-public class BrandServiceImpl implements BrandService{
+public class BrandServiceImpl implements BrandService {
 
     private final BrandRepository brandRepository;
 
@@ -23,41 +21,64 @@ public class BrandServiceImpl implements BrandService{
     @Override
     public List<BrandResponse> getAllBrands() {
         log.info("Fetching all brands");
-        List<Brand> brandList = brandRepository.findAll();
-        List<BrandResponse> brandResponses = brandList.stream()
-                .map(this::convertIntoBrandResponse)
-                .collect(Collectors.toList());
-        log.info("All brands were fetched");
-        return brandResponses;
+
+        List<BrandResponse> brands = brandRepository.findAll()
+                .stream()
+                .map(this::mapToResponse)
+                .toList();
+
+        log.info("Fetched {} brands", brands.size());
+        return brands;
     }
 
     @Override
-    public Brand createBrand(Brand brand) {
-        return brandRepository.save(brand);
+    public BrandResponse createBrand(Brand brand) {
+        log.info("Creating brand: {}", brand.getName());
+
+        Brand savedBrand = brandRepository.save(brand);
+
+        log.info("Brand created with id {}", savedBrand.getId());
+        return mapToResponse(savedBrand);
     }
 
     @Override
-    public Brand getBrandById(Integer brandId) {
-        return brandRepository.findById(brandId)
+    public BrandResponse getBrandById(Integer id) {
+        log.info("Fetching brand with id {}", id);
+
+        Brand brand = brandRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Brand not found"));
+
+        return mapToResponse(brand);
     }
 
     @Override
-    public Brand updateBrand(Integer brandId, Brand brand) {
+    public BrandResponse updateBrand(Integer brandId, Brand brand) {
+        log.info("Updating brand with id {}", brandId);
 
         Brand existingBrand = brandRepository.findById(brandId)
                 .orElseThrow(() -> new RuntimeException("Brand not found"));
 
         existingBrand.setName(brand.getName());
-        return brandRepository.save(existingBrand);
+
+        Brand updatedBrand = brandRepository.save(existingBrand);
+
+        log.info("Brand {} updated", brandId);
+        return mapToResponse(updatedBrand);
     }
 
     @Override
     public void deleteBrand(Integer brandId) {
-        brandRepository.deleteById(brandId);
+        log.info("Deleting brand with id {}", brandId);
+
+        Brand brand = brandRepository.findById(brandId)
+                .orElseThrow(() -> new RuntimeException("Brand not found"));
+
+        brandRepository.delete(brand);
+
+        log.info("Brand {} deleted", brandId);
     }
 
-    private BrandResponse convertIntoBrandResponse(Brand brand) {
+    private BrandResponse mapToResponse(Brand brand) {
         return BrandResponse.builder()
                 .id(brand.getId())
                 .name(brand.getName())

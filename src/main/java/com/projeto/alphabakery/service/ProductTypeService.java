@@ -10,9 +10,9 @@ import java.util.List;
 public interface ProductTypeService {
     List<ProductTypeResponse> getAllProductTypes();
 
-    ProductType createProductType(ProductType productType);
-    ProductType getProductTypeById(Integer id);
-    ProductType updateProductType(Integer productTypeId, ProductType productType);
+    ProductTypeResponse createProductType(ProductType productType);
+    ProductTypeResponse getProductTypeById(Integer id);
+    ProductTypeResponse updateProductType(Integer productTypeId, ProductType productType);
     void deleteProductType(Integer id);
 
 }

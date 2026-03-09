@@ -1,9 +1,16 @@
 package com.projeto.alphabakery.controller;
 
+import com.projeto.alphabakery.dto.BrandResponse;
 import com.projeto.alphabakery.dto.ProductResponse;
+import com.projeto.alphabakery.dto.ProductTypeResponse;
+import com.projeto.alphabakery.entity.Brand;
 import com.projeto.alphabakery.entity.Product;
+import com.projeto.alphabakery.entity.ProductType;
+import com.projeto.alphabakery.service.BrandService;
 import com.projeto.alphabakery.service.ProductService;
+import com.projeto.alphabakery.service.ProductTypeService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,8 +29,13 @@ public class ProductController {
 
     private final ProductService productService;
 
-    public ProductController(ProductService productService) {
+    private final BrandService brandService;
+    private final ProductTypeService productTypeService;
+
+    public ProductController(ProductService productService, BrandService brandService, ProductTypeService productTypeService) {
         this.productService = productService;
+        this.brandService = brandService;
+        this.productTypeService = productTypeService;
     }
 
     @GetMapping
@@ -57,15 +69,60 @@ public class ProductController {
         productService.deleteProduct(id);
     }
 
-//    private ProductResponse mapToResponse(ProductResponse product) {
-//        return ProductResponse.builder()
-//                .id(product.getId())
-//                .name(product.getName())
-//                .description(product.getDescription())
-//                .price(product.getPrice())
-//                .pictureUrl(product.getPictureUrl())
-//                .brand(product.getBrand())
-//                .productType(product.getProductType())
-//                .build();
-//    }
+    @GetMapping("/brands")
+    public ResponseEntity<List<BrandResponse>> getBrands() {
+        List<BrandResponse> brandResponses = brandService.getAllBrands();
+        return ResponseEntity.ok(brandResponses);
+    }
+
+    @GetMapping("/brands/{id}")
+    public ResponseEntity<BrandResponse> getBrandById(@PathVariable Integer id) {
+        return ResponseEntity.ok(brandService.getBrandById(id));
+    }
+
+    @PostMapping("/brands")
+    public ResponseEntity<BrandResponse> createBrand(@RequestBody Brand brand) {
+        return new ResponseEntity<>(brandService.createBrand(brand), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/brands/{id}")
+    public ResponseEntity<BrandResponse> updateBrand(@PathVariable Integer id,
+                                                     @RequestBody Brand brand) {
+        return ResponseEntity.ok(brandService.updateBrand(id, brand));
+    }
+
+    @DeleteMapping("/brands/{id}")
+    public ResponseEntity<Void> deleteBrand(@PathVariable Integer id) {
+        brandService.deleteBrand(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/producttypes")
+    public ResponseEntity<List<ProductTypeResponse>> getTypes() {
+        List<ProductTypeResponse> typeResponses = productTypeService.getAllProductTypes();
+        return ResponseEntity.ok(typeResponses);
+    }
+
+    @GetMapping("/producttypes/{id}")
+    public ResponseEntity<ProductTypeResponse> getTypeById(@PathVariable Integer id) {
+        return ResponseEntity.ok(productTypeService.getProductTypeById(id));
+    }
+
+    @PostMapping("/producttypes")
+    public ResponseEntity<ProductTypeResponse> createType(@RequestBody ProductType productType) {
+        return new ResponseEntity<>(productTypeService.createProductType(productType), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/producttypes/{id}")
+    public ResponseEntity<ProductTypeResponse> updateType(@PathVariable Integer id,
+                                                          @RequestBody ProductType productType) {
+        return ResponseEntity.ok(productTypeService.updateProductType(id, productType));
+    }
+
+    @DeleteMapping("/producttypes/{id}")
+    public ResponseEntity<Void> deleteType(@PathVariable Integer id) {
+        productTypeService.deleteProductType(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }
