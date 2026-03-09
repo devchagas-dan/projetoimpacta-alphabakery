@@ -1,8 +1,6 @@
 package com.projeto.alphabakery.service;
 
-import com.projeto.alphabakery.dto.BrandResponse;
 import com.projeto.alphabakery.dto.ProductResponse;
-import com.projeto.alphabakery.dto.ProductTypeResponse;
 import com.projeto.alphabakery.entity.Product;
 import com.projeto.alphabakery.repository.ProductRepository;
 import lombok.extern.log4j.Log4j2;
@@ -31,7 +29,6 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public List<ProductResponse> getProducts() {
-
         return productRepository.findAll()
                 .stream()
                 .map(this::mapToResponse)
@@ -39,14 +36,12 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public ProductResponse createProduct(Product product) {
-        Product savedProduct = productRepository.save(product);
-
-        return mapToResponse(savedProduct);
+    public Product createProduct(Product product) {
+        return productRepository.save(product);
     }
 
     @Override
-    public ProductResponse updateProduct(Integer productId, Product product) {
+    public Product updateProduct(Integer productId, Product product) {
 
         Product existingProduct = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
@@ -58,9 +53,7 @@ public class ProductServiceImpl implements ProductService{
         existingProduct.setBrand(product.getBrand());
         existingProduct.setProductType(product.getProductType());
 
-        Product updatedProduct = productRepository.save(existingProduct);
-
-        return mapToResponse(updatedProduct);
+        return productRepository.save(existingProduct);
     }
 
     @Override
@@ -69,25 +62,14 @@ public class ProductServiceImpl implements ProductService{
     }
 
     private ProductResponse mapToResponse(Product product) {
-
         return ProductResponse.builder()
                 .id(product.getId())
                 .name(product.getName())
                 .description(product.getDescription())
                 .price(product.getPrice())
                 .pictureUrl(product.getPictureUrl())
-                .brand(
-                        BrandResponse.builder()
-                                .id(product.getBrand().getId())
-                                .name(product.getBrand().getName())
-                                .build()
-                )
-                .productType(
-                        ProductTypeResponse.builder()
-                                .id(product.getProductType().getId())
-                                .name(product.getProductType().getName())
-                                .build()
-                )
+                .brand(product.getBrand())
+                .productType(product.getProductType())
                 .build();
     }
 }

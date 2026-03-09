@@ -9,8 +9,8 @@ public interface ProductService {
     ProductResponse getProductsById(Integer productId);
     List<ProductResponse> getProducts();
 
-    ProductResponse createProduct(Product product);
-    ProductResponse updateProduct(Integer productId, Product product);
+    Product createProduct(Product product);
+    Product updateProduct(Integer productId, Product product);
 
     void deleteProduct(Integer productId);
 
