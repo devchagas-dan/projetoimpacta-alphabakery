@@ -98,7 +98,7 @@ INSERT INTO product_type (name) VALUES
 INSERT INTO product
 (name, description, price, quantity, picture_url, product_type_id, brand_id)
 VALUES
-('Bolo de Cenoura com Cobertura', 'Massa macia com cobertura cremosa de chocolate.', 50.00, 10 ,'uploads/products/bolo-cenoura-chocolate.jpg', 3, 4),
+('Bolo de Cenoura com Cobertura', 'Massa macia com cobertura cremosa de chocolate.', 50.00, 1 ,'uploads/products/bolo-cenoura-chocolate.jpg', 3, 4),
 
 ('Bolo de Chocolate', 'Massa fofinha com sabor intenso de chocolate.', 49.90, 15, 'uploads/products/bolo-chocolate.jpg', 3, 4),
 
