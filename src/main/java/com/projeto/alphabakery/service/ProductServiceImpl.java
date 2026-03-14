@@ -53,6 +53,7 @@ public class ProductServiceImpl implements ProductService{
         existingProduct.setName(product.getName());
         existingProduct.setDescription(product.getDescription());
         existingProduct.setPrice(product.getPrice());
+        existingProduct.setQuantity(product.getQuantity());
         existingProduct.setPictureUrl(product.getPictureUrl());
         existingProduct.setBrand(product.getBrand());
         existingProduct.setProductType(product.getProductType());
@@ -74,6 +75,7 @@ public class ProductServiceImpl implements ProductService{
                 .name(product.getName())
                 .description(product.getDescription())
                 .price(product.getPrice())
+                .quantity(product.getQuantity())
                 .pictureUrl(product.getPictureUrl())
                 .brand(
                         BrandResponse.builder()
