@@ -37,6 +37,9 @@ public class Product {
     @Column(name = "price")
     private Long price;
 
+    @Column(name = "quantity")
+    private Integer quantity;
+
     @Column(name = "picture_url")
     private String pictureUrl;
 
