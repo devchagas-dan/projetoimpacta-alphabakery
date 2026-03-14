@@ -1,8 +1,11 @@
 -- =========================================
 -- DATABASE
 -- =========================================
+SET NAMES utf8mb4;
 
-CREATE DATABASE IF NOT EXISTS alphabakery;
+CREATE DATABASE IF NOT EXISTS alphabakery
+CHARACTER SET utf8mb4
+COLLATE utf8mb4_unicode_ci;
 USE alphabakery;
 
 -- =========================================
@@ -20,7 +23,9 @@ DROP TABLE IF EXISTS brand;
 CREATE TABLE brand (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL
-);
+)
+CHARACTER SET utf8mb4
+COLLATE utf8mb4_unicode_ci;
 
 -- =========================================
 -- TABLE: PRODUCT TYPE
@@ -29,7 +34,9 @@ CREATE TABLE brand (
 CREATE TABLE product_type (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL
-);
+)
+CHARACTER SET utf8mb4
+COLLATE utf8mb4_unicode_ci;
 
 -- =========================================
 -- TABLE: PRODUCT
@@ -52,7 +59,9 @@ CREATE TABLE product (
     CONSTRAINT fk_product_brand
         FOREIGN KEY (brand_id)
         REFERENCES brand(id)
-);
+)
+CHARACTER SET utf8mb4
+COLLATE utf8mb4_unicode_ci;
 
 -- =========================================
 -- INSERT: BRAND
