@@ -45,12 +45,12 @@ public class Product {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "brand_id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference(value = "brand-products")
     private Brand brand;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product_type_id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference(value = "productType-products")
     private ProductType productType;
 
 

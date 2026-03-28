@@ -32,7 +32,7 @@ public class Brand {
     private String name;
 
     @OneToMany(mappedBy = "brand", fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonManagedReference(value = "brand-products")
     private List<Product> products;
 
 }
