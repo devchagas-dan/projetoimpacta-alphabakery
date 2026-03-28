@@ -10,6 +10,7 @@ import com.projeto.alphabakery.service.BrandService;
 import com.projeto.alphabakery.service.ProductService;
 import com.projeto.alphabakery.service.ProductTypeService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,13 +53,13 @@ public class ProductController {
         return productService.getProductsById(id);
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ProductResponse createProduct(@RequestBody Product product) {
         return productService.createProduct(product);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public ProductResponse updateProduct(@PathVariable Integer id,
                                          @RequestBody Product product) {

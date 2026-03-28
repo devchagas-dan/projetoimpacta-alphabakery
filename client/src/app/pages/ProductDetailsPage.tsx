@@ -131,12 +131,10 @@ export default function ProductDetailsPage() {
         quantity: formData.quantity,
         pictureUrl: formData.pictureUrl,
         brand: {
-          id: selectedBrand.id,
-          name: selectedBrand.name
+          id: selectedBrand.id          
         },
         productType: {
-          id: selectedProductType.id,
-          name: selectedProductType.name
+          id: selectedProductType.id          
         }
       };
 
@@ -148,8 +146,12 @@ export default function ProductDetailsPage() {
         body: JSON.stringify(payload)
       });
 
+     
+
       if (!response.ok) {
-        throw new Error("Erro ao atualizar produto");
+        const errorText = await response.text();
+        console.error("Erro da API:", errorText);
+        throw new Error(`Erro ao atualizar produto: ${errorText}`);
       }
 
       setSuccessMessage("Produto atualizado com sucesso!");
@@ -158,7 +160,7 @@ export default function ProductDetailsPage() {
         navigate("/products");
       }, 1200);
     } catch (error) {
-      console.error(error);
+      console.error("Erro completo:", error);
       setErrorMessage("Não foi possível atualizar o produto.");
     } finally {
       setSaving(false);
@@ -182,7 +184,7 @@ export default function ProductDetailsPage() {
 
         <Box
           component="img"
-          src={formData.pictureUrl}
+          src={`http://localhost:8080/uploads/${formData.pictureUrl}`}
           alt={formData.name}
           sx={{
             width: "100%",
@@ -236,6 +238,7 @@ export default function ProductDetailsPage() {
             value={formData.pictureUrl}
             onChange={handleChange}
             fullWidth
+            disabled
           />
 
           <TextField

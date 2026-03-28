@@ -32,6 +32,6 @@ public class ProductType {
     private String name;
 
     @OneToMany(mappedBy = "productType", fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonManagedReference(value = "productType-products")
     private List<Product> products;
 }
