@@ -2,10 +2,12 @@ import { useEffect, useState } from "react"
 import { Grid, Card, CardContent, Typography, CardMedia } from "@mui/material"
 import type { Product } from "../types/Product"
 import { getProducts } from "../../services/api"
+import { useNavigate } from "react-router-dom";
 
 export default function ProductGrid() {
 
   const [products, setProducts] = useState<Product[]>([])
+  const navigate = useNavigate();
 
   useEffect(() => {
 
@@ -32,6 +34,7 @@ export default function ProductGrid() {
               component="img"
               height="300"
               image={`http://localhost:8080/uploads/${product.pictureUrl}`}
+              onClick={() => navigate(`/products/${product.id}`)}
             />
 
             <CardContent>
