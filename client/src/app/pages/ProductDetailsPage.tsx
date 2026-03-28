@@ -235,8 +235,7 @@ export default function ProductDetailsPage() {
           <TextField
             label="URL da Imagem"
             name="pictureUrl"
-            value={formData.pictureUrl}
-            onChange={handleChange}
+            value={formData.pictureUrl}            
             fullWidth
             disabled
           />
