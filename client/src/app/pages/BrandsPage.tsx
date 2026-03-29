@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import Header from "../components/Header"
-import { getBrands } from "../../services/api"
+import { getBrands, updateBrand } from "../../services/api"
 
 import {
   Box,
@@ -18,6 +18,7 @@ import {
 } from "@mui/material"
 import EditIcon from "@mui/icons-material/Edit"
 import DeleteIcon from "@mui/icons-material/Delete"
+import CheckIcon from "@mui/icons-material/Check"
 import MenuButtons from "../components/MenuButtons"
 import type { Brand } from "../types/Brand"
 
@@ -47,6 +48,33 @@ export default function BrandsPage() {
   const handleBlur = () => {
     setEditingBrandId(null)
     setEditedName("")
+  }
+
+  const handleUpdateBrand = async (brandId: number) => {
+    const trimmedName = editedName.trim()
+
+    if (!trimmedName) {
+      setEditingBrandId(null)
+      setEditedName("")
+      return
+    }
+
+    try {
+      const updatedBrand = await updateBrand(brandId, { name: trimmedName })
+
+      setBrands((prevBrands) =>
+        prevBrands.map((brand) =>
+          brand.id === brandId
+            ? { ...brand, name: updatedBrand.name }
+            : brand
+        )
+      )
+
+      setEditingBrandId(null)
+      setEditedName("")
+    } catch (error) {
+      console.error("Erro ao atualizar marca:", error)
+    }
   }
 
   return (
@@ -97,11 +125,22 @@ export default function BrandsPage() {
 
                   <TableCell>
                     <Box sx={{ display: "flex", gap: 1 }}>
-                      <Tooltip title="Editar" arrow>
-                        <IconButton onClick={() => handleEditClick(brand)}>
-                          <EditIcon />
-                        </IconButton>
-                      </Tooltip>
+                      {editingBrandId === brand.id ? (
+                        <Tooltip title="Confirmar edição" arrow>
+                          <IconButton
+                            onMouseDown={(e) => e.preventDefault()}
+                            onClick={() => handleUpdateBrand(brand.id)}
+                          >
+                            <CheckIcon />
+                          </IconButton>
+                        </Tooltip>
+                      ) : (
+                        <Tooltip title="Editar" arrow>
+                          <IconButton onClick={() => handleEditClick(brand)}>
+                            <EditIcon />
+                          </IconButton>
+                        </Tooltip>
+                      )}
 
                       <Tooltip title="Deletar" arrow>
                         <IconButton onClick={() => handleDeleteClick(brand.id)}>
