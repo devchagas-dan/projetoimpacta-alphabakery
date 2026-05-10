@@ -13,7 +13,8 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
-  Button
+  Button,
+  CircularProgress
 } from "@mui/material"
 import type { Product } from "../types/Product"
 import { getProducts } from "../../services/api"
@@ -24,24 +25,35 @@ export default function ProductGrid() {
   const [products, setProducts] = useState<Product[]>([])
   const [openConfirmModal, setOpenConfirmModal] = useState(false)
   const [selectedProductId, setSelectedProductId] = useState<number | null>(null)
+  const [isDeleting, setIsDeleting] = useState(false)
 
   const navigate = useNavigate()
 
   const handleDeleteClick = (productId: number) => {
+    if(isDeleting) return
+
     setSelectedProductId(productId)
     setOpenConfirmModal(true)
   }
 
   const handleCancelDelete = () => {
+    if(isDeleting) return 
+
     setOpenConfirmModal(false)
     setSelectedProductId(null)
   }
 
-  const handleConfirmDelete = () => {
-    console.log("Produto confirmado para deletar:", selectedProductId)
+  const handleConfirmDelete = async () => {
+    if(isDeleting || selectedProductId === null) return
 
-    setOpenConfirmModal(false)
-    setSelectedProductId(null)
+    try{
+      setIsDeleting(true)
+      console.log("Produto confirmado para deletar:", selectedProductId)
+    } finally{
+      setIsDeleting(false)
+      setOpenConfirmModal(false)
+      setSelectedProductId(null)
+    }
   }
 
   useEffect(() => {
@@ -93,9 +105,14 @@ export default function ProductGrid() {
                   </Typography>
 
                   <Tooltip title="Deletar" arrow>
-                    <IconButton onClick={() => handleDeleteClick(product.id)}>
+                    <span>
+                    <IconButton 
+                      onClick={() => handleDeleteClick(product.id)}
+                      disabled={isDeleting}
+                      >
                       <DeleteIcon />
                     </IconButton>
+                    </span>
                   </Tooltip>
                 </Box>
               </CardContent>
@@ -119,16 +136,23 @@ export default function ProductGrid() {
         </DialogContent>
 
         <DialogActions>
-          <Button onClick={handleCancelDelete}
+          <Button 
+            onClick={handleCancelDelete}
             color="error"
-            variant="contained"            
+            variant="contained"
+            disabled={isDeleting}            
           >
             Cancelar
           </Button>
           <Button
-            onClick={handleConfirmDelete}            
+            onClick={handleConfirmDelete}
+            disabled={isDeleting}            
           >
-            Deletar
+            {isDeleting? (
+              <CircularProgress size={20} />
+            ): ("Deletar"
+
+            )}            
           </Button>
         </DialogActions>
       </Dialog>
