@@ -14,10 +14,12 @@ import {
   DialogContentText,
   DialogActions,
   Button,
-  CircularProgress
+  CircularProgress,
+  Snackbar,
+  Alert
 } from "@mui/material"
 import type { Product } from "../types/Product"
-import { getProducts } from "../../services/api"
+import { deleteProduct, getProducts } from "../../services/api"
 import { useNavigate } from "react-router-dom"
 import DeleteIcon from "@mui/icons-material/Delete"
 
@@ -26,6 +28,10 @@ export default function ProductGrid() {
   const [openConfirmModal, setOpenConfirmModal] = useState(false)
   const [selectedProductId, setSelectedProductId] = useState<number | null>(null)
   const [isDeleting, setIsDeleting] = useState(false)
+
+  const [snackbarOpen, setSnackbarOpen] = useState(false)
+  const [snackbarMessage, setSnackbarMessage] = useState("")
+  const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error">("success")
 
   const navigate = useNavigate()
 
@@ -43,12 +49,26 @@ export default function ProductGrid() {
     setSelectedProductId(null)
   }
 
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false)
+  }
+
   const handleConfirmDelete = async () => {
     if(isDeleting || selectedProductId === null) return
 
     try{
       setIsDeleting(true)
-      console.log("Produto confirmado para deletar:", selectedProductId)
+
+      await deleteProduct(selectedProductId)
+
+      setSnackbarMessage("Produto deletado com sucesso:")
+      setSnackbarSeverity("success")
+      setSnackbarOpen(true)
+    } catch(error){
+      setSnackbarMessage("Não foi possível deletar o produto")
+      setSnackbarSeverity("error")
+      setSnackbarOpen(true)   
+      
     } finally{
       setIsDeleting(false)
       setOpenConfirmModal(false)
@@ -148,14 +168,29 @@ export default function ProductGrid() {
             onClick={handleConfirmDelete}
             disabled={isDeleting}            
           >
-            {isDeleting? (
+            {isDeleting ? (
               <CircularProgress size={20} />
-            ): ("Deletar"
-
+            ) : (
+              "Deletar"
             )}            
           </Button>
         </DialogActions>
       </Dialog>
+
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{vertical: "bottom", horizontal: "center"}}
+      >
+        <Alert
+        onClose={handleCloseSnackbar}
+        severity={snackbarSeverity}
+        variant="filled"
+        >
+          {snackbarMessage}
+        </Alert>
+        </Snackbar>     
     </>
   )
 }
