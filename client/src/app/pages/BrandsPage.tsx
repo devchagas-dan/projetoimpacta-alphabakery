@@ -140,13 +140,7 @@ export default function BrandsPage() {
                             <EditIcon />
                           </IconButton>
                         </Tooltip>
-                      )}
-
-                      <Tooltip title="Deletar" arrow>
-                        <IconButton onClick={() => handleDeleteClick(brand.id)}>
-                          <DeleteIcon />
-                        </IconButton>
-                      </Tooltip>
+                      )}                     
                     </Box>
                   </TableCell>
                 </TableRow>
