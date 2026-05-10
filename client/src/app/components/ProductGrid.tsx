@@ -1,13 +1,19 @@
 import { useEffect, useState } from "react"
-import { Grid, Card, CardContent, Typography, CardMedia } from "@mui/material"
+import { Grid, Card, CardContent, Typography, CardMedia, Tooltip, IconButton, Box } from "@mui/material"
 import type { Product } from "../types/Product"
 import { getProducts } from "../../services/api"
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
+import DeleteIcon from "@mui/icons-material/Delete"
+
 
 export default function ProductGrid() {
 
   const [products, setProducts] = useState<Product[]>([])
   const navigate = useNavigate();
+
+  const handleDeleteClick = (productId: number) => {
+  console.log("Deletar produto:", productId)}
+
 
   useEffect(() => {
 
@@ -37,7 +43,7 @@ export default function ProductGrid() {
               onClick={() => navigate(`/products/${product.id}`)}
             />
 
-            <CardContent>
+            <CardContent>             
 
               <Typography variant="h6">
                 {product.name}
@@ -59,11 +65,22 @@ export default function ProductGrid() {
                 Tipo: {product.productType?.name}
               </Typography>
 
+              <Box display="flex" justifyContent="space-between" alignItems="center">
+                
               <Typography>
-                Estoque: {product.quantity}
+                Estoque: {product.quantity}                
               </Typography>
 
+              <Tooltip title="Deletar" arrow>
+                  <IconButton onClick={() => handleDeleteClick(product.id)}>
+                    <DeleteIcon />
+                  </IconButton>
+              </Tooltip>
+
+              </Box>
+
             </CardContent>
+            
 
           </Card>
 
