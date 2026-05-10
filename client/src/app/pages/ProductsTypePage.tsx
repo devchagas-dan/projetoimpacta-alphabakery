@@ -141,12 +141,7 @@ export default function ProductTypesPage() {
                           </IconButton>
                         </Tooltip>
                       )}
-
-                      <Tooltip title="Deletar" arrow>
-                        <IconButton onClick={() => handleDeleteClick(productType.id)}>
-                          <DeleteIcon />
-                        </IconButton>
-                      </Tooltip>
+                      
                     </Box>
                   </TableCell>
                 </TableRow>
