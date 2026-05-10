@@ -10,6 +10,10 @@ export const getProducts = async () => {
   return response.data
 }
 
+export const deleteProduct = async (id: number) => {
+  await api.delete(`/products/${id}`)
+}
+
 // BRANDS
 export const getBrands = async () => {
   const response = await api.get("/products/brands")
