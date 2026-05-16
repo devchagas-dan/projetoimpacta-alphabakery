@@ -89,7 +89,7 @@ export default function ProductGrid() {
     <>
       <Grid container spacing={3} padding={4}>
         {products.map(product => (
-          <Grid size={{ xs: 12, sm: 6, md: 3 }} key={product.id}>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }} key={product.id}>            
             <Card>
               <CardMedia
                 component="img"

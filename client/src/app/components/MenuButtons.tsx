@@ -1,41 +1,69 @@
-import { Button, Stack } from "@mui/material"
+import { Box, Button, Stack } from "@mui/material"
 import { useNavigate } from "react-router-dom"
 
-export default function MenuButtons() {
+type MenuButtonsProps = {
+  createPath:string
+}
+
+export default function MenuButtons({ createPath} : MenuButtonsProps) {
 
   const navigate = useNavigate()
 
   return (
-    <Stack
-      direction="row"
-      spacing={4}
-      justifyContent="center"
+    <Box
       sx={{
         backgroundColor: "#e9aab4",
         padding: 2
       }}
     >
-      <Button
-        variant="contained"
-        onClick={() => navigate("/products")}
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
       >
-        Produtos
-      </Button>
+        
+        <Stack
+          direction="row"
+          spacing={4}
+          justifyContent="center"
+          sx={{ flex: 1 }}
+        >
+          <Button
+            variant="contained"
+            onClick={() => navigate("/products")}
+          >
+            Produtos
+          </Button>
 
-      <Button
-        variant="contained"
-        onClick={() => navigate("/brands")}
-      >
-        Marca
-      </Button>
+          <Button
+            variant="contained"
+            onClick={() => navigate("/brands")}
+          >
+            Marca
+          </Button>
 
-      <Button
-        variant="contained"
-        onClick={() => navigate("/producttypes")}
-      >
-        Tipo de Produto
-      </Button>
+          <Button
+            variant="contained"
+            onClick={() => navigate("/producttypes")}
+          >
+            Tipo de Produto
+          </Button>
 
-    </Stack>
+           <Button
+              variant="contained"
+              onClick={() => navigate(createPath)}
+              sx={{
+                backgroundColor: "green",
+                "&:hover": {
+                  backgroundColor: "darkgreen"
+                }
+              }}
+            >
+          Cadastrar
+        </Button>   
+        </Stack>          
+        
+      </Stack>
+    </Box>
   )
 }

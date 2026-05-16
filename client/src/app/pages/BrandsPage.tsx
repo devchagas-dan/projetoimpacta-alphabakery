@@ -17,7 +17,6 @@ import {
   Tooltip
 } from "@mui/material"
 import EditIcon from "@mui/icons-material/Edit"
-import DeleteIcon from "@mui/icons-material/Delete"
 import CheckIcon from "@mui/icons-material/Check"
 import MenuButtons from "../components/MenuButtons"
 import type { Brand } from "../types/Brand"
@@ -40,10 +39,7 @@ export default function BrandsPage() {
     setEditingBrandId(brand.id)
     setEditedName(brand.name)
   }
-
-  const handleDeleteClick = (brandId: number) => {
-    console.log("Deletar marca com id:", brandId)
-  }
+ 
 
   const handleBlur = () => {
     setEditingBrandId(null)
