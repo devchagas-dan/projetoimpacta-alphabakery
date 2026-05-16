@@ -17,7 +17,6 @@ import {
   Tooltip
 } from "@mui/material"
 import EditIcon from "@mui/icons-material/Edit"
-import DeleteIcon from "@mui/icons-material/Delete"
 import CheckIcon from "@mui/icons-material/Check"
 import MenuButtons from "../components/MenuButtons"
 import type { ProductType } from "../types/ProductType"
@@ -39,10 +38,6 @@ export default function ProductTypesPage() {
   const handleEditClick = (productType: ProductType) => {
     setEditingProductTypeId(productType.id)
     setEditedName(productType.name)
-  }
-
-  const handleDeleteClick = (productTypeId: number) => {
-    console.log("Deletar tipo de produto com id:", productTypeId)
   }
 
   const handleBlur = () => {
