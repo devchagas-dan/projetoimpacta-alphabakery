@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <MenuButtons />
+      <MenuButtons createPath="/products/create" />
       <ProductGrid />
     </>
   )

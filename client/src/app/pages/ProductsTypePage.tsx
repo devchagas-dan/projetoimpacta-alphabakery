@@ -75,7 +75,7 @@ export default function ProductTypesPage() {
   return (
     <>
       <Header />
-      <MenuButtons />
+      <MenuButtons createPath="/producttype/create" />
 
       <Box sx={{ padding: 10 }}>
         <Typography variant="h4" gutterBottom>

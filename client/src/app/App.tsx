@@ -5,6 +5,9 @@ import BrandsPage from "./pages/BrandsPage";
 import ProductsTypePage from "./pages/ProductsTypePage";
 import React from "react";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
+import ProductRegistrationPage from "./pages/ProductRegistrationPage"
+import ProductTypeRegistrationPage from "./pages/ProductTypeRegistrationPage"
+import BrandsRegistrationPage from "./pages/BrandsRegistrationPage"
 
 
 
@@ -23,6 +26,9 @@ export default function App() {
 
           <Route path="/producttypes" element={<ProductsTypePage />} />
           <Route path="/products/:id" element={<ProductDetailsPage />} />
+          <Route path="/products/create" element={<ProductRegistrationPage />} />
+          <Route path="/producttype/create" element={<ProductTypeRegistrationPage />} />
+          <Route path="/brands/create" element={<BrandsRegistrationPage />} />
 
         </Routes>
 
