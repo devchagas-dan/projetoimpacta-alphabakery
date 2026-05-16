@@ -76,7 +76,7 @@ export default function BrandsPage() {
   return (
     <>
       <Header />
-      <MenuButtons />
+      <MenuButtons createPath="/brands/create" />
 
       <Box sx={{ padding: 10 }}>
         <Typography variant="h4" gutterBottom>
