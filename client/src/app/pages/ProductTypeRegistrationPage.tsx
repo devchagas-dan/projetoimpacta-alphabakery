@@ -37,7 +37,7 @@ export default function ProductTypeRegistrationPage() {
         name: name.trim()
       };
 
-      const response = await fetch("http://localhost:8080/producttypes", {
+      const response = await fetch("http://localhost:8080/api/products/producttypes", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
