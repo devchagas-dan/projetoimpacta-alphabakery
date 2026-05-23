@@ -10,11 +10,17 @@ export const getProducts = async () => {
   return response.data
 }
 
+export const createProduct = async (productData: FormData) => {
+  const response = await api.post("/products", productData)   
+  
+  return response.data
+}
+
 export const deleteProduct = async (id: number) => {
   await api.delete(`/products/${id}`)
 }
 
-// BRANDS
+
 export const getBrands = async () => {
   const response = await api.get("/products/brands")
   return response.data
