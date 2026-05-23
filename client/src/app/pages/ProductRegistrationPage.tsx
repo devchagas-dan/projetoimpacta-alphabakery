@@ -5,8 +5,7 @@ import {
     Box,
     Button,
     CircularProgress,
-    Container,
-    Menu,
+    Container,    
     MenuItem,
     Paper,
     Snackbar,
@@ -16,6 +15,7 @@ import {
 
 import type { Brand } from "../types/Brand";
 import type { ProductType } from "../types/ProductType";
+
 
 export default function ProductRegistrationPage() {
 
@@ -41,6 +41,8 @@ export default function ProductRegistrationPage() {
         brandId: 0,
         productTypeId: 0
     });
+
+    
 
     useEffect(() =>{
         const fetchData = async () =>{
@@ -116,7 +118,7 @@ export default function ProductRegistrationPage() {
                 setErrorMessage("Selecione uma imagem para o produto");
                 return;
             }
-            if(!formData.brandId || formData.productTypeId) {
+            if(!formData.brandId || !formData.productTypeId) {
                 setErrorMessage("Selecione a marca e o tipo de produto");
                 return;
             }
